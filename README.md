@@ -16,11 +16,7 @@ This repository contains the scripts, documentation and logic to prepare a self 
 ./install_vagrant_plugins.sh
 ```
 
-## Test a Box
-
-Note that when you bring up a Virtual Box, the VirtualBox Guest Additions will be installed.  Obviously you would not do this in a bare metal environment, but this is needed in the development setting.  This is handled in the `Vagrantfile` so it's not a big deal.
-
-On my machine it takes just under 10 minutes to provision a machine from scratch.  This is not normal in a VirtualBox/Vagrant config because we are actually doing a PXE install and starting from a blank .box file.  When you install from a normal .box file it is MUCH FASTER.  We are trying to emulate a bare metal environment as much as possible.
+## Run Rancher
 
 NOTE: You will have to enter your password for the `vagrant-hostmanager` to update the /etc/hosts file.
 
