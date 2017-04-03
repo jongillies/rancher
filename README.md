@@ -66,31 +66,4 @@ Bam!  You have a Rancher Server running.
 
 ## Cluster Setup
 
-Need to figure out how to get the agent registration docker command line from the running server.
-
-sudo docker run -d --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.2.1 http://172.28.128.101:8080/v1/scripts/38A60DA064048CF11FF9:1483142400000:6spywpeBE4qBthjBAvsh3sreaYY
-
-
-http://172.28.128.101:8080/v1/scripts/2820F04E5C09AAC6C7AB:1483142400000:TYP0QHJykvA5ToFBPeNrd0lfv4
-
-
-TBD
-
-# References
-
-[Ubuntu 16.10 Server](http://releases.ubuntu.com/16.10/ubuntu-16.10-server-amd64.iso)
-[Ubuntu 16.10 Desktop](http://releases.ubuntu.com/16.10/ubuntu-16.10-desktop-amd64.iso)
-
-[Ubuntu 16.04 Server](http://releases.ubuntu.com/16.04.2/ubuntu-16.04.2-server-amd64.iso)
-[Ubuntu 16.04 Desktop](http://releases.ubuntu.com/16.04.2/ubuntu-16.04.2-desktop-amd64.iso)
-
-[Ubuntu 15.04 Server](http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso)
-[Ubuntu 15.04 Desktop](http://releases.ubuntu.com/14.04/ubuntu-14.04.5-desktop-amd64.iso)
-
-[Centos 7 Mimimal](http://centos.host-engine.com/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso )
-
-[SquashFS Kickstarting Ubuntu](http://askubuntu.com/questions/763363/pxe-setup-for-xenial-prepends-squashfs-path-with-cdrom)
-
-# Random Notes I Took During Research
-
-I did find that the Ubuntu 16.x releases no longer put the 1st network interface at `eth0` which was causing the `netcfg` step of the installation to SEGFAULT.  So I modified the kickstart file to use the interface that was detected, in this case `enp0s3`.  I found this [tidbit](http://www.itzgeek.com/how-tos/mini-howtos/change-default-network-name-ens33-to-old-eth0-on-ubuntu-16-04.html) on changing the default to `eth0` but that seems like a lot of work.
+Now run `vagrant up` to bring up the rest of the nodes.
