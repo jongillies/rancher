@@ -1,0 +1,58 @@
+---
+- name: copy the docker repo public key
+  template:
+    src: files/2c52609d.pub
+    dest: /root/2c52609d.pub
+    group: root
+    owner: root
+
+- name: add docker repo key
+  apt_key:
+    file: /root/2c52609d.pub
+
+#    This just did not work reliably all the time :(
+#    - name: add docker repo key
+#      apt_key:
+#        keyserver: p80.pool.sks-keyservers.net:80
+#        id: 58118E89F3A912897C070ADBF76221572C52609D
+
+- name: add docker repository
+  apt_repository:
+    repo: 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+    state: present
+
+- name: update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install prerequisite packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - python-pip
+    - python-httplib2
+
+- name: install docker
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker-engine
+
+- name: add ubuntu to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
+# Make sure this python module is installed so we can use the 'docker_container' module in Ansible
+- name: install docker-py
+  pip:
+    name: docker-py
+

@@ -1,0 +1,41 @@
+---
+- name: r0.e.int
+  ip: 172.28.128.101
+  box: ubuntu/xenial64
+  ram: 2048
+  cpus: 4
+  extra_vars:
+    install_rancher_server: yes
+    install_rancher_agent: yes
+    rancher_server: 172.28.128.101
+    rancher_port: 8080
+- name: r1.e.int
+  ip: 172.28.128.102
+  box: ubuntu/xenial64
+  ram: 1024
+  cpus: 2
+  extra_vars:
+    install_rancher_server: no
+    install_rancher_agent: yes
+    rancher_server: 172.28.128.101
+    rancher_port: 8080
+- name: r2.e.int
+  ip: 172.28.128.103
+  box: ubuntu/xenial64
+  ram: 1024
+  cpus: 2
+  extra_vars:
+    install_rancher_server: no
+    install_rancher_agent: yes
+    rancher_server: 172.28.128.101
+    rancher_port: 8080
+- name: r3.e.int
+  ip: 172.28.128.104
+  box: ubuntu/xenial64
+  ram: 1024
+  cpus: 2
+  extra_vars:
+    install_rancher_server: no
+    install_rancher_agent: yes
+    rancher_server: 172.28.128.101
+    rancher_port: 8080

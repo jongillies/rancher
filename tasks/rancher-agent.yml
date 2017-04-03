@@ -1,0 +1,59 @@
+---
+
+- name: get the default project id
+  uri:
+    method: GET
+    status_code: 200
+    url: "http://{{ rancher_server }}:{{ rancher_port }}/v1/projects"
+    return_content: yes
+  register: project_id
+  retries: 5
+  delay: 10
+  ignore_errors: true
+
+- debug:
+    msg: "project_id: {{ project_id }}"
+
+- name: return the registration token url of rancher server
+  uri:
+    method: POST
+    status_code: 201
+    url: "http://{{ rancher_server }}:{{ rancher_port }}/v1/registrationtokens?projectId={{ project_id.json['data'][0]['id'] }}"
+    return_content: yes
+  register: rancher_token_url
+
+- debug:
+    msg: "rancher_token_url: {{ rancher_token_url }}"
+
+- name: return the registration token of rancher server
+  uri:
+    method: GET
+    url: "{{ rancher_token_url.json['links']['self'] }}"
+    return_content: yes
+  register: rancher_token
+
+- debug:
+    msg: "rancher_token: {{ rancher_token }}"
+
+- debug:
+    msg: "{{ rancher_token.json['registrationUrl'] }}"
+
+- name: Check if the rancher-agent is running
+  command: docker ps -a
+  register: containers
+
+- name: run agent
+  shell: "docker run -d --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v{{ rancher_agent_version }} {{ rancher_token.json['registrationUrl'] }}"
+  when: "{{ 'rancher-agent' not in containers.stdout }}"
+
+# This did not work, so I am running in shell above
+#    - name: register the machine with the rancher server
+#      docker_container:
+#        name: rancher-agent
+#        image: "rancher/agent:v{{ rancher_agent_version }}"
+#        privileged: yes
+#        detach: True
+#        volumes: /var/run/docker.sock:/var/run/docker.sock
+#        command: "{{ rancher_token.json['registrationUrl'] }}"
+#        state: started
+#      when: "{{ 'rancher-agent' not in containers.stdout }}"

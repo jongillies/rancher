@@ -1,0 +1,9 @@
+---
+
+- include: "docker.yml"
+
+- include: "rancher-server.yml"
+  when: install_rancher_server == true
+
+- include: "rancher-agent.yml"
+  when: install_rancher_agent == true

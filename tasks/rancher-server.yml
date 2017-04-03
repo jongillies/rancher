@@ -1,0 +1,15 @@
+---
+- name: rancher server
+  docker_container:
+    name: rancher
+    image: rancher/server:v1.5.2
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "8080:8080"
+
+- name: wait for rancher server to come up
+  wait_for:
+    host: "{{ rancher_server }}"
+    port: "{{ rancher_port }}"
+    delay: 10
