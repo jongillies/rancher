@@ -46,7 +46,6 @@ The `Vagrantfile` reads a data file called `nodes.yml`.  The following VMs are d
 | 172.28.128.101 | r0.e.int | ubuntu/xenial64 | Rancher Server/Agent |
 | 172.28.128.102 | r1.e.int | ubuntu/xenial64 | Rancher Agent        |
 | 172.28.128.103 | r2.e.int | ubuntu/xenial64 | Rancher Agent        |
-| 172.28.128.104 | r3.e.int | ubuntu/xenial64 | Rancher Agent        |
 
 ## Rancher Server Setup
 
@@ -63,3 +62,6 @@ Bam!  You have a Rancher Server running.
 ## Cluster Setup
 
 Now run `vagrant up` to bring up the rest of the nodes.
+
+
+![screenshot](files/screenshot.png)
