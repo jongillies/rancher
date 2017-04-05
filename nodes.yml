@@ -29,13 +29,3 @@
     install_rancher_agent: yes
     rancher_server: 172.28.128.101
     rancher_port: 8080
-- name: r3.e.int
-  ip: 172.28.128.104
-  box: ubuntu/xenial64
-  ram: 1024
-  cpus: 2
-  extra_vars:
-    install_rancher_server: no
-    install_rancher_agent: yes
-    rancher_server: 172.28.128.101
-    rancher_port: 8080
