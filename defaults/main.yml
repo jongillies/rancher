@@ -1,1 +1,4 @@
 ---
+install_rancher_server: yes
+install_ranger_agent: yes
+rancher_agent_version: 1.2.1

@@ -1,16 +1,18 @@
 # Rancher
 
-This repository contains the scripts, documentation and logic to prepare a self bootstraping Rancher cluster.
+This repository contains the scripts, documentation and logic to prepare a self bootstrapping [Rancher](http://rancher.com/) cluster.
 
 #### Install the Following
 
-* VirtualBox >= 5.1.14
-* VirtualBox Extension Pack
-* Vagrant >= 1.9.3
-    * vagrant-hostmanager
-    * vagrant-vbguest
-    * vagrant-share
-* Ansible >= 2.2.1.0_2
+* [VirtualBox](https://www.virtualbox.org/wiki/VirtualBox) >= 5.1.14
+* [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads) Should match VirtualBox version
+* [Vagrant](https://www.vagrantup.com/) >= 1.9.3
+    * [vagrant-hostmanager](https://github) >= 1.8.5.com/devopsgroup-io/vagrant-hostmanager)
+    * [vagrant-vbguest](https://github.com/dotless-de/vagrant-vbguest) >= 0.13.0
+    * [vagrant-share](https://www.vagrantup.com/docs/share/) >= 1.1.7
+* [Ansible](https://www.ansible.com/) >= 2.2.1.0_2
+
+Once Vagrant is installed, install the necessary plugins:
 
 ```bash
 ./install_vagrant_plugins.sh
@@ -18,7 +20,11 @@ This repository contains the scripts, documentation and logic to prepare a self 
 
 ## Run Rancher
 
-NOTE: You will have to enter your password for the `vagrant-hostmanager` to update the /etc/hosts file.
+NOTE: You will have to enter your password for the `vagrant-hostmanager` to update your local `/etc/hosts` file.
+
+I usually just change the ownership of the `/etc/hosts` file like: `sudo chown $USER /etc/hosts`, then I don't have to enter the password.
+
+We are going to bring up just one node and not provision it.
 
 ```bash
 $ vagrant up r0.e.int --no-provision
@@ -26,7 +32,7 @@ $ vagrant up r0.e.int --no-provision
 
 Then you should be able to SSH to the box:
 
-```bash
+```
 $ vagrant ssh r0.e.int
 Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-66-generic x86_64)
 
@@ -34,8 +40,11 @@ Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-66-generic x86_64)
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 Last login: Thu Mar 23 10:05:18 2017 from 10.0.2.2
-ubuntu@rancher0:~$
+
+ubuntu@r0.e.int:~$
 ```
+
+This validates we have our environment setup properly and are ready to proceed.
 
 ## Vagrantfile
 
@@ -63,5 +72,33 @@ Bam!  You have a Rancher Server running.
 
 Now run `vagrant up` to bring up the rest of the nodes.
 
-
 ![screenshot](files/screenshot.png)
+
+## Behind the Scenes
+
+Three variables are defined that control what is installed:
+
+* install_rancher_server: yes
+* install_ranger_agent: yes
+* rancher_agent_version: 1.2.1
+
+Also defined must be:
+
+* rancher_server
+* rancher_port
+
+Above are the defaults for those settings.
+
+The settings are customized in the `nodes.yml` so that the Rancher Server is only installed on `r0.e.int` and the Rancher Agent is installed on all 3 nodes.
+
+For the Rancher Agent to successfully install, the Ranger Server must be running first.  This is because the agent needs to obtain the registration information via the API.
+
+The `tasks/rancher-agent.yml` obtains the following information in this order:
+
+* Gets the default project_id
+* Using the project_id it gets the rancher_token_url
+* Using the rancher_token_url it gets rancher_token
+* Runs the rancher-agent container using the rancher_token_url and the rancher_token
+
+
+
