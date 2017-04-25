@@ -98,7 +98,14 @@ The `tasks/rancher-agent.yml` obtains the following information in this order:
 * Gets the default project_id
 * Using the project_id it gets the rancher_token_url
 * Using the rancher_token_url it gets rancher_token
-* Runs the rancher-agent container using the rancher_token_url and the rancher_token
+* Runs the rancher-agent container using the rancher_token_url and the rancher_token, this "registers" the agent with the Rancher Server.
 
+# Troubleshooting
 
+If you get into a situation where the VirtualBox tools don't install properly, make sure you have the latest Extension Pack installed.  If  you run the VirtualBox GUI, it will prompt you to install if they are out of date.
 
+Or, if that is not working set this to false in the `Vagrantfile`:
+
+```ruby
+config.vbguest.auto_update = false
+````

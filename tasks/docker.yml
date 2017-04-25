@@ -38,12 +38,15 @@
     - python-pip
     - python-httplib2
 
+#
+# As of 2017/04/25, docker-engine 17.04.* is not supported: http://docs.rancher.com/rancher/v1.5/en/hosts/#supported-docker-versions
+#
 - name: install docker
-  package:
+  apt:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
-    - docker-engine
+    - docker-engine=17.03.*
 
 - name: add ubuntu to docker group
   user:

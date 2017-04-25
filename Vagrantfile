@@ -9,8 +9,7 @@ Vagrant.configure(2) do |config|
 
     config.ssh.username = 'ubuntu'
 
-    config.vbguest.auto_update = true
-    config.vbguest.iso_path = 'http://download.virtualbox.org/virtualbox/%{version}/VBoxGuestAdditions_%{version}.iso'
+    config.vbguest.auto_update = false
 
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
