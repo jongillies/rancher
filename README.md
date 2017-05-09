@@ -1,5 +1,7 @@
 # Rancher
 
+[![Travis](https://travis-ci.org/jongillies/rancher.svg?branch=master)](https://travis-ci.org/jongillies/rancher.svg?branch=master  )
+
 This repository contains the scripts, documentation and logic to prepare a self bootstrapping [Rancher](http://rancher.com/) cluster.
 
 #### Install the Following
