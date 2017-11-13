@@ -76,6 +76,9 @@ Now run `vagrant up` to bring up the rest of the nodes.
 
 ![screenshot](files/screenshot.png)
 
+
+Navigate to here to look at the infrastructure: http://r0.e.int:8080/env/1a5/infra/hosts
+
 ## Behind the Scenes
 
 Three variables are defined that control what is installed:
